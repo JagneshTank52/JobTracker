@@ -12,5 +12,7 @@ public interface IAdminService
     public Task<(bool status, string message)> AddJobAsync(JobVm jobModel);
     public Task<(bool status, string message)> EditJobAsync(JobVm jobModel);
     public Task<(bool status, string message)> DeleteJobAsync(int id);
+    public Task<ReviewModal> GetReviewModalAsync(int jobId, int userId);
+    public Task<(bool status, string message)> UpdateJobStatus(ReviewModal reviewModal);
 
 }

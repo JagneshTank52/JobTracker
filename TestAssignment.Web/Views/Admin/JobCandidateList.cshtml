@@ -38,10 +38,10 @@
             getApplicationList();
         });
 
-        function getReviewModal() {
+        function getReviewModal(userId) {
             $.ajax({
                 url: "/Admin/GetReviewModal",
-                data: { jobId: jobId },
+                data: { jobId: jobId,userId:userId },
                 type: "GET",
                 dataType: "html",
                 success: function (response) {

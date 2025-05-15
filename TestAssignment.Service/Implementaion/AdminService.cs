@@ -176,23 +176,61 @@ public class AdminService : IAdminService
         }
     }
 
-    // ADD User 
+    public async Task<ReviewModal> GetReviewModalAsync(int jobId, int userId)
+    {
+        JobUserMapping? jobUserMapping = (await _unitOfWork.JobUserMappingRepository.GetAllAsync(false, filter: f => !f.IsDeleted && f.UserId == userId && f.JobId == jobId)).FirstOrDefault();
 
+        if (jobUserMapping == null)
+        {
+            return (null!);
+        }
 
-    // public async Task<ReviewModal> GetReviewModal(int jobId)
-    // {
-    //     JobUserMapping? jobUserMapping = await _unitOfWork.JobUserMappingRepository.GetAllAsync(false, f =>f.IsDeleted && f => f.userId==userId && f => f.jobId==jobId);
-    //     ReviewModal reviewModal = new ReviewModal
-    //     {
-    //         StatusList = (await _unitOfWork.JobStatusRepository.GetAllAsync()).Select(s => new SelectListItem
-    //         {
-    //             Value = s.Id.ToString(),
-    //             Text = s.Name
-    //         }).ToList(),
-    //         JobUserMappingId = 
-    //     };
+        ReviewModal reviewModal = new ReviewModal
+        {
+            StatusList = (await _unitOfWork.JobStatusRepository.GetAllAsync()).Select(s => new SelectListItem
+            {
+                Value = s.Id.ToString(),
+                Text = s.Name
+            }).ToList(),
+            JobUserMappingId = jobUserMapping.Id,
+            Comment = jobUserMapping.Comment,
+            StatusId = jobUserMapping.StatusId,
+        };
 
+        return reviewModal;
+    }
 
-    // }
+    //Update Job Status
+    public async Task<(bool status, string message)> UpdateJobStatus(ReviewModal reviewModal)
+    {
+        try
+        {
+            JobUserMapping? jobUserMapping = await _unitOfWork.JobUserMappingRepository.GetByIdAsync(reviewModal.JobUserMappingId);
+            if (jobUserMapping == null)
+            {
+                return (false, "user not apply for this job");
+            }
+
+            jobUserMapping.Comment = reviewModal.Comment;
+            jobUserMapping.StatusId = reviewModal.StatusId;
+            jobUserMapping.ModifiedAt = DateTime.Now;
+
+            _unitOfWork.JobUserMappingRepository.Update(jobUserMapping);
+
+            bool isUpdated = await _unitOfWork.SaveAsync();
+
+            if (!isUpdated)
+            {
+                return (false, "Application not updated");
+            }
+
+            return (true, "Application updated successfully");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex.Message);
+            return(false,"Exception Occur");
+        }
+    }
 
 }

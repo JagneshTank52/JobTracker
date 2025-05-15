@@ -30,8 +30,7 @@
                         <div class="d-flex justify-content-evenly gap-3">
 
                             <span>
-                                <a asp-action="EditJob" asp-controller="Admin" method="get"> <i
-                                        class="bi bi-filetype-pdf me-3 edit "></i></a>
+                                <a> <i class="bi bi-filetype-pdf me-3 edit "></i></a>
 
                             </span>
 
@@ -39,24 +38,7 @@
                                 <a onclick="getReviewModal(@application.UserId)">
                                     Review
                                 </a>
-
                             </span>
-                            @* <span>
-                                <a asp-action="EditJob" asp-controller="Admin" asp-route-jobId="@job.Id" method="get"> <i
-                                        class="bi bi-pen text-success event-action-btn"></i></a>
-                            </span>
-                            <span>
-                                <a asp-action="DeleteJob" asp-controller="Admin" asp-route-jobId="@job.Id" method="get">
-                                    <i class="bi bi-trash event-action-btn"></i>
-                                </a>
-                            </span>
-
-                            <span>
-                                <a asp-action="ApplyJob" asp-controller="User" asp-route-jobId="@job.Id">
-                                    Apply
-                                </a>
-                            </span> *@
-
                         </div>
                     </td>
                 </tr>

@@ -1,8 +1,9 @@
 @using TestAssignment.Repository.ViewModel;
 @model ReviewModal;
 
-<div class="modal-body">
-    <form class="row">
+<form id="reviewForm">
+    <div class="modal-body d-flex w-100 gap-3 flex-column">
+
         <input type="text" asp-for="JobUserMappingId" hidden>
         <div class="form-floating">
             <select class="form-select" id="statusId" aria-label="Select Role" asp-for="StatusId"
@@ -18,10 +19,37 @@
             <span asp-validation-for="Comment" class="text-danger"></span>
             <label for="comment">Comment</label>
         </div>
-    </form>
-</div>
 
-<div class="modal-footer">
-    <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Update</button>
-    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-</div>
+    </div>
+
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Update</button>
+        <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+    </div>
+</form>
+
+<script>
+    // Post - Add Category
+    $("#reviewForm").on("submit", function (e) {
+        e.preventDefault();
+        $.ajax({
+            url: "/Admin/UpdateReview",
+            type: "POST",
+            data: $(this).serialize(),
+            success: function (response) {
+                if (response.success) {
+                    reviewModal.hide();
+                    toastr.success(response.msg);
+                    getApplicationList()
+                } else {
+                    if (response.success == false) {
+                        toastr.error(response.msg);
+                    }
+                }
+            },
+            error: function () {
+                toastr.error("An error occurred while saving the Review.");
+            }
+        });
+    });
+</script>

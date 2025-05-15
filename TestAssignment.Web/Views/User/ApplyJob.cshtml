@@ -7,7 +7,8 @@
 
 <div class="d-flex justify-content-between mb-3">
     <p class="fs-4 fw-bold">Apply Job</p>
-    <a type="button" class="d-flex btn btn-primary mb-0 align-items-center fs-6" asp-action="Index" asp-controller="Home">
+    <a type="button" class="d-flex btn btn-primary mb-0 align-items-center fs-6" asp-action="Index"
+        asp-controller="Home">
         Back
     </a>
 </div>
@@ -63,7 +64,8 @@
     </section>
     <hr>
     <section id="userDetalis">
-        <form asp-action="ApplyJob" asp-controller="User" method="post" asp-route-jobId="@Model.JobId" enctype="multipart/form-data">
+        <form asp-action="ApplyJob" asp-controller="User" method="post" asp-route-jobId="@Model.JobId"
+            enctype="multipart/form-data">
             <p class="fs-5 fw-semibold">
                 User Details
             </p>
@@ -75,6 +77,10 @@
                     <label for="fileInput" id="upload-file"
                         style="width: 100%; height: 6rem; border-width: 2px; border-style: dashed;"
                         class="text-secondary d-flex flex-row align-items-center justify-content-center">
+                        <span class="me-5" id="uploadedImg">
+                            <img id="profileImage"
+                                height="60" width="60" style="border-radius: 50%;">
+                        </span>
                         <div class="d-dlex flex-column justify-content-center">
                             <i class="bi bi-cloud-arrow-up fs-4 mb-0"></i>
                             <p class="mb-0">Upload</p>
@@ -95,40 +101,32 @@
 @section Scripts {
     <script>
         $(document).ready(function () {
-            debugger
-            $("#upload-file").on("dragenter", function (evt) {
-                evt.preventDefault();
-                evt.stopPropagation();
-            });
+            document.getElementById('fileInput').addEventListener('change', fileValidation);
+        });
 
-            $("#upload-file").on("dragover", function (evt) {
-                evt.preventDefault();
-                evt.stopPropagation();
-            });
-
-            $("#upload-file").on("drop", function (e) {
-                e.preventDefault();
-                e.stopPropagation();
-                console.log("file dropped");
-                var files = e.originalEvent.dataTransfer.files[0];
-                console.log(files);
-                if (files) {
-                    $("#fileInput")[0].files = e.originalEvent.dataTransfer.files;
-                }
-            });
-
-            $("#fileInput").change(function () {
-                debugger
-                var file = this.files[0];
-                if (file) {
+        function fileValidation() {
+            var fileInput = document.getElementById('fileInput');
+            var filePath = fileInput.value;
+            var allowedExtensions = /(\.pdf)$/i;
+            if (!allowedExtensions.exec(filePath)) {
+                toastr.error("Please upload file having extensions .jpeg/.jpg/.png/.gif/.jfif only.")
+                fileInput.value = '';
+                $("#profileImage").attr("src", "");
+                return false;
+            } else {
+                if (fileInput.files && fileInput.files[0]) {
+                    console.log("Group inside")
                     var reader = new FileReader();
                     reader.onload = function (e) {
                         $("#profileImage").attr("src", e.target.result);
                     };
-                    reader.readAsDataURL(file);
+                    console.log(fileInput.files[0])
+                    reader.readAsDataURL(fileInput.files[0]);
+                    $("#uploadedImg").removeClass("d-none");
+                    $("#uploadedImg").addClass("d-block");
                 }
-                $("#uploadedImg").removeClass("d-none");
-            });
-        });
+                return true;
+            }
+        }
     </script>
 }

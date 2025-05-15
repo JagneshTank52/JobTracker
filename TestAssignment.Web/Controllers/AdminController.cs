@@ -133,18 +133,27 @@ public class AdminController : Controller
         return View();
     }
 
-    // [HttpGet]
-    // [Authorize(Roles = "Admin")]
-    // public IActionResult GetReviewModal(int jobId)
-    // {
-    //     if (jobId <= 0)
-    //     {
-    //         return RedirectToAction("Index", "Home");
-    //     }
+    [HttpGet]
+    [Authorize(Roles = "Admin")]
+    public async Task<IActionResult> GetReviewModal(int jobId, int userId)
+    {
+        if (jobId <= 0)
+        {
+            return RedirectToAction("Index", "Home");
+        }
 
-    //     ReviewModal reviewModal = _adminService.GetReviewModal();
-        
-    //     return PartialView("Review",reviewModal);
-    // }
+        ReviewModal reviewModal = await _adminService.GetReviewModalAsync(jobId, userId);
+
+        return PartialView("_Review", reviewModal);
+    }
+
+    [HttpPost]
+    [Authorize(Roles = "Admin")]
+    public async Task<IActionResult> UpdateReview(ReviewModal reviewModal)
+    {
+        var (status, message) = await _adminService.UpdateJobStatus(reviewModal);
+
+        return Json(new { success = status, msg = message });
+    }
 
 }
