@@ -1,0 +1,78 @@
+@using TestAssignment.Repository.ViewModel
+@model LoginVm
+@{
+    Layout = "_AccountLayout";
+}
+
+<main class="login vh-100 w-100 d-flex">
+    <section class="d-flex align-items-center justify-content-center w-100">
+        <div class="d-flex flex-column justify-content-center w-50">
+
+            <div class="d-flex flex-row mb-5  align-self-center">
+                <p class="mb-0 fs-4 fw-bolder align-self-center">Test Assignment</p>
+            </div>
+
+            <p class="fs-4 fw-bold mb-4">Welcome,</p>
+
+            <form class="login-form needs-validation" id="login-form" method="post" asp-controller="Account" asp-action="Login">
+                <div class="mb-4">
+                    <div class="position-relative form-floating mb-3">
+                        <input type="email" class="form-control form-control-lg" id="email" asp-for="Email"
+                            placeholder="name@example.com" required>
+                        <label for="email" class="form-label">Email address*</label>
+                        <i class="bi bi-person-fill login-icons" style="font-size: 25px;"></i>
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="mb-5">
+                    <div class="position-relative form-floating mb-3">
+                        <input type="password" id="password" class="form-control form-control-lg" asp-for="Password" placeholder="password"
+                            aria-describedby="passwordHelpBlock" required minlength="6">
+                        <label for="password" class="form-label">Password*</label>
+                        <i class="bi bi-eye-slash login-icons" id="togglePassword" style="font-size: 25px;"></i>
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                </div>
+
+                @* <div class="login-credantial d-flex justify-content-between mb-4">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="invalidCheck">
+                        <label class="form-check-label" for="invalidCheck">
+                            Remember me
+                        </label>
+                    </div>
+                    <a id="forget-password" asp-route-email="@ViewBag.email" class="text-decoration-none">forget
+                        password?</a>
+                </div> *@
+
+                <button class="btn btn-primary fw-bolder w-100" type="submit">Login</button>
+            </form>
+        </div>
+    </section>
+</main>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $("#togglePassword").click(function () {
+                var passwordInput = $("#password");
+                var eyeIcon = $("#togglePassword");
+
+                if (passwordInput.attr("type") === "password") {
+                    passwordInput.attr("type", "text");
+                    eyeIcon.removeClass("bi-eye");
+                    eyeIcon.addClass("bi-eye-slash");
+                } else {
+                    passwordInput.attr("type", "password");
+                    eyeIcon.removeClass("bi-eye-slash");
+                    eyeIcon.addClass("bi-eye");
+                }
+            });
+        });
+    </script>
+
+    @{
+        <partial name="_ValidationScriptsPartial"></partial>
+    }
+}

@@ -1,0 +1,49 @@
+:root {
+    --primary-color: #27548A;
+    --secondary-color: #FFFFFF;
+    --login-bg-color: #f2fafd;
+    --bg-color: #F2F2F2;
+    --secondary-bg-color: #F7F7F7;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body,
+html {
+    background-color: var(--bg-color);
+    height: 100% !important;
+}
+
+.login-icons {
+    position: absolute;
+    top: 20%;
+    right: 3%;
+    color: black;
+}
+
+.icon {
+    font-size: 25px;
+}
+
+.btn-primary{
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+.btn-primary:hover{
+    background-color: var(--primary-color);
+}
+
+.error-page{
+    background-color: var(--login-bg-color);
+}
+.error-page-text{
+    color: var(--primary-color);
+}
+
+.navigation ul li.active {
+    border-bottom: 2px solid var(--primary-color);
+}
