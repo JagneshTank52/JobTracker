@@ -211,7 +211,7 @@ public class AdminService : IAdminService
                 return (false, "user not apply for this job");
             }
 
-            jobUserMapping.Comment = reviewModal.Comment;
+            jobUserMapping.Comment = reviewModal.Comment ?? string.Empty;
             jobUserMapping.StatusId = reviewModal.StatusId;
             jobUserMapping.ModifiedAt = DateTime.Now;
 

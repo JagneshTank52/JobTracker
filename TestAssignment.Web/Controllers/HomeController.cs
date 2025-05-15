@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TestAssignment.Repository.Helper;
 using TestAssignment.Service.Interface;

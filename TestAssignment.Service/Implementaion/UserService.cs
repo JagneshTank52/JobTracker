@@ -63,9 +63,6 @@ public class UserService : IUserService
 
             await _unitOfWork.JobUserMappingRepository.AddAsync(userJobMapping);
 
-            // appliedJob.NoOfApplicant -= 1;
-            // _unitOfWork.JobRepository.Update(appliedJob);
-
             bool isAdded = await _unitOfWork.SaveAsync();
 
             if (!isAdded)

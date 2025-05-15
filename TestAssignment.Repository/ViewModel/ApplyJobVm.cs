@@ -26,5 +26,4 @@ public class ApplyJobVm
     public string ResumePath { get; set; } = string.Empty;
     [Required(ErrorMessage = "Resume Reqired")]
     public IFormFile? ResumeFile { get; set; }
-
 }

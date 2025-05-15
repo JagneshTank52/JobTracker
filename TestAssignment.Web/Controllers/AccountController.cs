@@ -1,7 +1,6 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 using TestAssignment.Repository.ViewModel;
-using TestAssignment.Service.Helper;
 using TestAssignment.Service.Interface;
 
 namespace TestAssignment.Web.Controllers;
