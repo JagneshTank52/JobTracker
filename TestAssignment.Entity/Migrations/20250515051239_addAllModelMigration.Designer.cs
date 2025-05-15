@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using TestAssignment.Entity.Data;
@@ -11,9 +12,11 @@ using TestAssignment.Entity.Data;
 namespace TestAssignment.Entity.Migrations
 {
     [DbContext(typeof(TestAssignmentContext))]
-    partial class TestAssignmentContextModelSnapshot : ModelSnapshot
+    [Migration("20250515051239_addAllModelMigration")]
+    partial class addAllModelMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

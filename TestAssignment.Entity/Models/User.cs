@@ -14,10 +14,11 @@ public class User
     public string Email { get; set; } = string.Empty;
     public string Password { get; set; } = string.Empty;
     public string HasPassword { get; set; } = string.Empty;
-    public bool IsDeleted {get; set;} = false;
-    public DateTime CreatedAt {get; set;} = DateTime.Now;
-    public DateTime? ModifiedAt {get; set;}
+    public bool IsDeleted { get; set; } = false;
+    public DateTime CreatedAt { get; set; } = DateTime.Now;
+    public DateTime? ModifiedAt { get; set; }
     public int UserRoleId { get; set; }
 
-    public UserRole UserRole {get; set;} = null!;
+    public UserRole UserRole { get; set; } = null!;
+    public virtual ICollection<JobUserMapping> JobUserMappings { get; } = new List<JobUserMapping>();
 }
