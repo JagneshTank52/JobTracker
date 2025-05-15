@@ -1,0 +1,76 @@
+@using TestAssignment.Repository.Helper
+@using TestAssignment.Repository.ViewModel;
+@model List<JobUserMappingVm>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col" style="width: 10%;">ApplicationId</th>
+            <th scope="col" style="width: 15%;">CandidateId</th>
+            <th scope="col" style="width: 15%;">First Name</th>
+            <th scope="col" style="width: 15%;">Last Name</th>
+            <th scope="col" style="width: 15%;">Email</th>
+            <th scope="col" style="width: 15%;">Status</th>
+            <th scope="col" style="width: 15%; text-align: center;">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Any())
+        {
+            @foreach (var application in Model)
+            {
+                <tr style="line-height: 2rem;">
+                    <td>@application.Id</td>
+                    <td>@application.UserId</td>
+                    <td>@application.User.FirstName</td>
+                    <td>@application.User.LastName</td>
+                    <td>@application.User.Email</td>
+                    <td>@application.StatusName</td>
+                    <td>
+                        <div class="d-flex justify-content-evenly gap-3">
+
+                            <span>
+                                <a asp-action="EditJob" asp-controller="Admin" method="get"> <i
+                                        class="bi bi-filetype-pdf me-3 edit "></i></a>
+
+                            </span>
+
+                            <span>
+                                <a onclick="getReviewModal(@application.UserId)">
+                                    Review
+                                </a>
+
+                            </span>
+                            @* <span>
+                                <a asp-action="EditJob" asp-controller="Admin" asp-route-jobId="@job.Id" method="get"> <i
+                                        class="bi bi-pen text-success event-action-btn"></i></a>
+                            </span>
+                            <span>
+                                <a asp-action="DeleteJob" asp-controller="Admin" asp-route-jobId="@job.Id" method="get">
+                                    <i class="bi bi-trash event-action-btn"></i>
+                                </a>
+                            </span>
+
+                            <span>
+                                <a asp-action="ApplyJob" asp-controller="User" asp-route-jobId="@job.Id">
+                                    Apply
+                                </a>
+                            </span> *@
+
+                        </div>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="5">
+                    <div class="text-center text-secondary fw-semibold">
+                        No Data
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

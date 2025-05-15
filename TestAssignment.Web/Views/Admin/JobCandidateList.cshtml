@@ -1,0 +1,73 @@
+@{
+    ViewData["Title"] = "Application List Page";
+}
+
+<div class="d-flex justify-content-between mb-3">
+    <p class="fs-4 fw-bold">Applications </p>
+    <a type="button" class="d-flex btn btn-primary mb-0 align-items-center fs-6" asp-action="Index" asp-controller="Home">
+        Back
+    </a>
+</div>
+
+<div class="card table-responsive-xl" id="applicationList">
+
+</div>
+
+<div class="modal fade" id="reviewModal" tabindex="-1" aria-labelledby="reviewModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="reviewModalLabel">Assign Table</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div id="review">
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        var urlParams = new URLSearchParams(window.location.search);
+        var jobId = urlParams.get('jobId');
+        console.log(jobId);
+        var reviewModal = new bootstrap.Modal("#reviewModal");
+        
+        $(document).ready(function () {
+            getApplicationList();
+        });
+
+        function getReviewModal() {
+            $.ajax({
+                url: "/Admin/GetReviewModal",
+                data: { jobId: jobId },
+                type: "GET",
+                dataType: "html",
+                success: function (response) {
+                    $("#review").html(response);
+                    reviewModal.show();
+                },
+                error: function (response) {
+                    toastr.error("Error in data");
+                }
+            })
+            reviewModal.show();
+        }
+        function getApplicationList() {
+            $.ajax({
+                url: "/Admin/ApplicationList",
+                data: { jobId: jobId },
+                type: "GET",
+                dataType: "html",
+                success: function (response) {
+                    $("#applicationList").html(response);
+                },
+                error: function (response) {
+                    toastr.error("Error in data");
+                }
+            })
+        };
+
+    </script>
+}

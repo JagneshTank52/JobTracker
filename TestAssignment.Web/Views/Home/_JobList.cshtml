@@ -1,0 +1,70 @@
+@using TestAssignment.Repository.Helper
+@using TestAssignment.Repository.ViewModel;
+@model PaginatedList<JobVm>;
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col" style="width: 10%;">ID</th>
+            <th scope="col" style="width: 20%;">Job Title</th>
+            <th scope="col" style="width: 20%;">Job Location</th>
+            <th scope="col" style="width: 20%;">Company Name</th>
+            <th scope="col" style="width: 15%;">No Of Applicant</th>
+            <th scope="col" style="width: 15%; text-align: center;">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Items.Any())
+        {
+            @foreach (var job in Model.Items)
+            {
+                <tr style="line-height: 2rem;">
+                    <td>@job.Id</td>
+                    <td>@job.JobTitle</td>
+                    <td>@job.JobLocation</td>
+                    <td>@job.CompanyName</td>
+                    <td>@job.NoOfApplicant</td>
+                    <td>
+                        <div class="d-flex justify-content-evenly gap-3">
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <span>
+                                    <a asp-action="JobCandidateList" asp-controller="Admin" asp-route-jobId="@job.Id" method="get">
+                                        <i class="bi bi-eye edit"></i>
+                                    </a>
+                                </span>
+                                <span>
+                                    <a asp-action="EditJob" asp-controller="Admin" asp-route-jobId="@job.Id" method="get"> <i
+                                            class="bi bi-pen text-success event-action-btn"></i></a>
+                                </span>
+                                <span>
+                                    <a asp-action="DeleteJob" asp-controller="Admin" asp-route-jobId="@job.Id" method="get">
+                                        <i class="bi bi-trash event-action-btn"></i>
+                                    </a>
+                                </span>
+                            }
+                            else
+                            {
+                                <span>
+                                    <a asp-action="ApplyJob" asp-controller="User" asp-route-jobId="@job.Id">
+                                        Apply
+                                    </a>
+                                </span>
+                            }
+                        </div>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="5">
+                    <div class="text-center text-secondary fw-semibold">
+                        No Data
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

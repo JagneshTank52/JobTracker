@@ -29,7 +29,7 @@ public class AccountController : Controller
         return userRole switch
         {
             "Admin" => RedirectToAction("Index", "Home"),
-            "User" => RedirectToAction("Privacy", "Home"),
+            "User" => RedirectToAction("Index", "Home"),
             _ => View(),
         };
     }
@@ -43,7 +43,7 @@ public class AccountController : Controller
             return View(loginModel);
         }
 
-        var (success, token,message,user) = await _authenticationService.LoginUser(loginModel);
+        var (success, token, message, user) = await _authenticationService.LoginUser(loginModel);
 
         if (!success || user == null)
         {
@@ -67,7 +67,7 @@ public class AccountController : Controller
         return user.UserRole.Name switch
         {
             "Admin" => RedirectToAction("Index", "Home"),
-            "User" => RedirectToAction("Privacy", "Home"),
+            "User" => RedirectToAction("Index", "Home"),
             _ => View(),
         };
     }
@@ -77,6 +77,34 @@ public class AccountController : Controller
     public IActionResult LogOut()
     {
         Response.Cookies.Delete("AuthToken");
+        return RedirectToAction("Login", "Account");
+    }
+
+    // GET - Register
+    [HttpGet]
+    public IActionResult Register()
+    {
+        return View();
+    }
+
+    // Post - Register
+    [HttpPost]
+    public async Task<IActionResult> RegisterAsync(RegisterVm registerModal)
+    {
+        if (!ModelState.IsValid)
+        {
+            return View(registerModal);
+        }
+
+        var (status, message) = await _authenticationService.AddUserAsync(registerModal);
+
+        if (!status)
+        {
+            TempData["error"] = message;
+            return View(registerModal);
+        }
+
+        TempData["success"] = message;
         return RedirectToAction("Login", "Account");
     }
 }

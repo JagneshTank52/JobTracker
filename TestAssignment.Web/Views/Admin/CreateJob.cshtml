@@ -1,0 +1,71 @@
+@using TestAssignment.Repository.ViewModel;
+@model JobVm;
+
+@{
+    ViewData["Title"] = "Create Job Application";
+}
+
+<div class="d-flex justify-content-between mb-3">
+    <p class="fs-4 fw-bold">Create Job Application</p>
+    <a type="button" class="d-flex btn btn-primary mb-0 align-items-center fs-6" asp-action="Index" asp-controller="Home">
+        Back
+    </a>
+</div>
+
+<div class="card mb-3 px-3 py-4 d-flex">
+    <section>
+        <form method="post" asp-action="CreateJob" asp-controller="Admin">
+            <p class="fs-5 fw-semibold">
+                Job Details
+            </p>
+            <div class="row gy-3 mb-5">
+                <div class="col-12 col-md-6 col-xxl-4">
+                    <div class="form-floating">
+                        <input type="text" name="jobid" id="jobId" hidden asp-for="Id">
+                        <input type="text" class="form-control" id="jobTitle" placeholder="Name" asp-for="JobTitle">
+                        <span asp-validation-for="JobTitle" class="text-danger"></span>
+                        <label for="jobTitle">Job Title*</label>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-xxl-4">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="companyName" placeholder="No of Persion"
+                            asp-for="CompanyName">
+                        <span asp-validation-for="CompanyName" class="text-danger"></span>
+                        <label for="companyName">Company Name*</label>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-xxl-4">
+                    <div class="form-floating">
+                        <input type="text" class="form-control" id="jobLocation" placeholder="No of Persion"
+                            asp-for="JobLocation">
+                        <span asp-validation-for="JobLocation" class="text-danger"></span>
+                        <label for="jobLocation">Job Location*</label>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-xxl-4">
+                    <div class="form-floating">
+                        <textarea class="form-control" placeholder="Write a description here" asp-for="JobDescription"
+                            id="jobDescription"></textarea>
+                        <span asp-validation-for="JobDescription" class="text-danger"></span>
+                        <label for="jobDescription">Job Description</label>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-xxl-4">
+                    <div class="form-floating">
+                        <input type="number" class="form-control" id="noOfApplicant" placeholder="No of Persion"
+                            asp-for="NoOfApplicant">
+                        <span asp-validation-for="NoOfApplicant" class="text-danger"></span>
+                        <label for="noOfApplicant">No of Applicant*</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-end gap-3">
+                <button type="submit" class="btn btn-primary add-wating-btn">Add</button>
+                <a type="reset" class="btn outline-btn" asp-action="Index" asp-controller="Home">Cancel</a>
+            </div>
+        </form>
+    </section>
+    <hr>
+</div>

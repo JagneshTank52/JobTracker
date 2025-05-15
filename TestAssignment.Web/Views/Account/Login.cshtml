@@ -35,18 +35,9 @@
                     </div>
                 </div>
 
-                @* <div class="login-credantial d-flex justify-content-between mb-4">
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" id="invalidCheck">
-                        <label class="form-check-label" for="invalidCheck">
-                            Remember me
-                        </label>
-                    </div>
-                    <a id="forget-password" asp-route-email="@ViewBag.email" class="text-decoration-none">forget
-                        password?</a>
-                </div> *@
-
-                <button class="btn btn-primary fw-bolder w-100" type="submit">Login</button>
+                <button class="btn btn-primary fw-bolder w-100 mb-3" type="submit">Login</button>
+                <a asp-controller="Account" asp-action="Register" class="btn btn-primary fw-bolder w-100" type="button">Register</a>
+                
             </form>
         </div>
     </section>

@@ -1,15 +1,9 @@
-﻿@{
-    ViewData["Title"] = "Admin Page";
+@{
+    ViewData["Title"] = "User Page";
 }
 
 <div class="d-flex justify-content-between mb-3">
     <p class="fs-4 fw-bold">Job List</p>
-    @if (User.IsInRole("Admin"))
-    {
-        <a type="button" class="d-flex btn btn-primary mb-0 align-items-center fs-6" asp-action="CreateJob" asp-controller="Admin">
-            Add Job
-        </a>
-    }
 </div>
 
 <div class="card table-responsive-xl" id="jobList">

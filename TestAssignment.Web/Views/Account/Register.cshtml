@@ -1,0 +1,93 @@
+@using TestAssignment.Repository.ViewModel
+@model RegisterVm;
+@{
+    Layout = "_AccountLayout";
+}
+
+<main class="login vh-100 w-100 d-flex">
+    <section class="d-flex align-items-center justify-content-center w-100">
+        <div class="d-flex flex-column justify-content-center w-50">
+
+            <div class="d-flex flex-row mb-5  align-self-center">
+                <p class="mb-0 fs-4 fw-bolder align-self-center">Job Tracker</p>
+            </div>
+
+            <p class="fs-4 fw-bold mb-4">Welcome,</p>
+
+            <form class="login-form needs-validation" id="login-form" method="post" asp-controller="Account"
+                asp-action="Register">
+                <div class="mb-4">
+                    <div class="position-relative form-floating mb-3">
+                        <input type="text" class="form-control form-control-lg" id="firstName" asp-for="FirstName"
+                            placeholder="firstName" required>
+                        <label for="firstName" class="form-label">FirstName*</label>
+                        <span asp-validation-for="FirstName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <div class="position-relative form-floating mb-3">
+                        <input type="text" class="form-control form-control-lg" id="lastName" asp-for="LastName"
+                             placeholder="lastname" required>
+                        <label for="lastName" class="form-label">LastName*</label>
+                        <span asp-validation-for="LastName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <div class="position-relative form-floating mb-3">
+                        <input type="text" class="form-control form-control-lg" id="userName" asp-for="UserName"
+                           placeholder="userName" required>
+                        <label for="userName" class="form-label">UserName*</label>
+                        <span asp-validation-for="UserName" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <div class="position-relative form-floating mb-3">
+                        <input type="email" class="form-control form-control-lg" id="email" asp-for="Email"
+                            placeholder="name@example.com" required>
+                        <label for="email" class="form-label">Email address*</label>
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="mb-5">
+                    <div class="position-relative form-floating mb-3">
+                        <input type="password" id="password" class="form-control form-control-lg" asp-for="Password"
+                            placeholder="password" aria-describedby="passwordHelpBlock" required minlength="6">
+                        <label for="password" class="form-label">Password*</label>
+                        <i class="bi bi-eye-slash login-icons" id="togglePassword" style="font-size: 25px;"></i>
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary fw-bolder w-100 mb-3" type="submit">Register</button>
+                <a asp-controller="Account" asp-action="Login" class="btn btn-primary fw-bolder w-100"
+                    type="button">Login</a>
+
+            </form>
+        </div>
+    </section>
+</main>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $("#togglePassword").click(function () {
+                var passwordInput = $("#password");
+                var eyeIcon = $("#togglePassword");
+
+                if (passwordInput.attr("type") === "password") {
+                    passwordInput.attr("type", "text");
+                    eyeIcon.removeClass("bi-eye");
+                    eyeIcon.addClass("bi-eye-slash");
+                } else {
+                    passwordInput.attr("type", "password");
+                    eyeIcon.removeClass("bi-eye-slash");
+                    eyeIcon.addClass("bi-eye");
+                }
+            });
+        });
+    </script>
+
+    @{
+        <partial name="_ValidationScriptsPartial"></partial>
+    }
+}

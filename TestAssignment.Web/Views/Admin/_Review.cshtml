@@ -1,0 +1,27 @@
+@using TestAssignment.Repository.ViewModel;
+@model ReviewModal;
+
+<div class="modal-body">
+    <form class="row">
+        <input type="text" asp-for="JobUserMappingId" hidden>
+        <div class="form-floating">
+            <select class="form-select" id="statusId" aria-label="Select Role" asp-for="StatusId"
+                asp-items="Model.StatusList">
+                <option value="" selected>Select Unit</option>
+            </select>
+            <label for="statusId">Status*</label>
+        </div>
+
+        <div class="form-floating">
+            <textarea class="form-control" placeholder="Write a description here" asp-for="Comment"
+                id="comment"></textarea>
+            <span asp-validation-for="Comment" class="text-danger"></span>
+            <label for="comment">Comment</label>
+        </div>
+    </form>
+</div>
+
+<div class="modal-footer">
+    <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Update</button>
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+</div>

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using TestAssignment.Entity.Data;
+using TestAssignment.Repository.Helper;
 using TestAssignment.Repository.Implementaion;
 using TestAssignment.Repository.Interface;
 using TestAssignment.Service.Implementaion;
@@ -18,7 +19,7 @@ public static class DependencyInjection
     {
         // Connect Database
         services.AddDbContext<TestAssignmentContext>(options =>
-        options.UseNpgsql(connectionString,x => x.MigrationsAssembly("TestAssignment.Entity")));
+        options.UseNpgsql(connectionString, x => x.MigrationsAssembly("TestAssignment.Entity")));
 
         // Register JWT Authentication
         var key = Encoding.UTF8.GetBytes(services.BuildServiceProvider().GetRequiredService<IConfiguration>()["JwtSettings:Key"]!);
@@ -50,10 +51,14 @@ public static class DependencyInjection
                     }
                 };
             });
-        
+
         // Register Service
+        services.AddAutoMapper(typeof(MappingProfile));
+        services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
         services.AddScoped<IAuthenticationService, AuthenticationService>();
         services.AddScoped<ITokenService, TokenService>();
+        services.AddScoped<IAdminService, AdminService>();
+        services.AddScoped<IUserService, UserService>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 
